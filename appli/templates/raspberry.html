@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block raspberry %}
+    <div class="container">
+        <div class="row">
+            <h1> page Raspberry pi</h1>
+            <!-- 
+            <div class="col-sm mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Homeberry 01
+                            {% if pi1_data[2] == 'connecté' %}
+                                <span class="badge badge-success ml-3">connecté</span>
+                        </h5>
+                    </div>
+                    <div class="card-body ">
+                                <p class="card-text">IP: {{ pi1_conf[0] }}</p>
+                                <p class="card-text">Port: {{ pi1_conf[1] }}</p>
+                                <p class="card-text">Temp: {{ pi1_data[0] }}</p>
+                                <p class="card-text">Hum: {{ pi1_data[1] }}</p>
+                            {% else %}
+                                <span class="badge badge-danger ml-3">non connecté</span>
+                                </h5>
+                    </div>
+                    <div class="card-body ">
+                                <p class="card-text">IP: {{ pi1_conf[0] }}</p>
+                                <p class="card-text">Port: {{ pi1_conf[1] }}</p>
+                                <p class="card-text"> </p>
+                                <p class="card-text">{{ pi1_data[2] }}</p>
+                            {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Homeberry 02
+                            {% if pi2_data[2] == 'connecté' %}
+                                <span class="badge badge-success ml-3">connecté</span>
+                        </h5>
+                    </div>
+                    <div class="card-body ">
+                                <p class="card-text">IP: {{ pi2_conf[0] }}</p>
+                                <p class="card-text">Port: {{ pi2_conf[1] }}</p>
+                                <p class="card-text">Temp: {{ pi2_data[0] }}</p>
+                                <p class="card-text">Hum: {{ pi2_data[1] }}</p>
+                            {% else %}
+                                <span class="badge badge-danger ml-3">déconnecté</span>
+                                </h5>
+                    </div>
+                    <div class="card-body ">
+                                <p class="card-text">IP: {{ pi2_conf[0] }}</p>
+                                <p class="card-text">Port: {{ pi2_conf[1] }}</p>
+                                <p class="card-text"> .</p>
+                                <p class="card-text">{{ pi2_data[2] }}</p>
+                            {% endif %}
+                    </div>
+                </div>
+            </div>  -->
+        </div>
+    </div>
+{% endblock%}

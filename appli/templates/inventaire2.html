@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block inventaire %}
+    <div class="container.fluid m-3">
+        <ul class="nav nav-pills mx-3 my-2" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class=" btn btn-success active mr-3" id="pills-cave-tab" data-toggle="pill" href="#pills-cave" role="tab" aria-controls="pills-cave" aria-selected="true">Cave</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-success ml-3" id="pills-congel-tab" data-toggle="pill" href="#pills-congel" role="tab" aria-controls="pills-congel" aria-selected="false">Congel</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-cave" role="tabpanel" aria-labelledby="pills-cave-tab">
+                <div class="card mx-3 mt-4">
+                    <div class="card-body">
+                          
+                        <table class="table table-sm">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Article</th>
+                                    <th scope="col">Quantité</th>
+                                    <th scope="col">périmé le:</th>
+                                    <th scope="col">actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    {% for elem in db %}  
+                                        <tr id="tabl_db_{{ loop.index }}">
+                                            <th scope="row">{{ loop.index }}<span id="tab_db_{{ loop.index }}_id"class="invisible">{{ elem.id }}</span></th>
+                                            <td id="tab_db_{{ loop.index }}_art">{{ elem.article }}</td>
+                                            <td id="tab_db_{{ loop.index }}_qua">{{ elem.quantite }}</td>
+                                            <td id="tab_db_{{ loop.index }}_per">{{ elem.peremption }}</td>
+                                            <td><button class="btn" id="trash_{{ loop.index }}" onclick="recup_id(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
+                                        </tr>
+                                        {% if loop.last %}
+                                            {% set nb_elem = loop.length %}
+                                            <h5 class="my-2">Cave <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann> </h5>
+                                            
+                                        {% endif%}
+                                    {% endfor %}
+                                </tbody>
+                              </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-congel" role="tabpanel" aria-labelledby="pills-congel-tab">
+                <div class="card mx-3 mt-4" >
+                    <div class="card-body">
+                        <h5 class="card-title">Congel</h5>
+                        <p class="card-text">d title and make up thSome quick example text to build on the care bulk of the card's content.</p>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts/inventaire.js') }}"></script>
+{% endblock%}

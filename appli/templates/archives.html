@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block archives %}
+<div class="container.fluid">
+        <div class="row ">
+            <div class="card col-sm">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs ">
+                        <li class="nav-item">
+                            <a id="tab_photo" class="nav-link active" href="#">Photos</a>
+                        </li>
+                        <li class="nav-item">  
+                            <a id="tab_admin"class="nav-link" href="#">Administratif</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link "  href="#">Users</a>
+                        </li>
+                    </ul> 
+                </div>
+                <form action='' method='post'>
+                    <div class="card-body mt-3">
+                        <div class="col-xl-7 mx-3"> </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>        
+<!--div class="container.fluid">
+{% if page == 'photo' %}
+    <div class="row">
+        <div class="col xs-6 ">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link {{ [proprio, 'marc']|focus_page }}" href="{{ url_for('archives', page='photo',proprio='marc') }}">Marc</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ [proprio, 'sophie']|focus_page }}" href="{{ url_for('archives', page='photo',proprio='sophie') }}">Sophie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link [proprio, 'autres']|focus_page"  href="{{ url_for('archives', page='photo',proprio='autres') }}" tabindex="-1" aria-disabled="true">Autres...</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                {% if proprio == 'marc' %}
+                    <h5 class="card-title">Photos Marc</h5>
+                    <p class="card-text">Vous trouverez bientôt les archives photos de Marc ici...</p>
+                {% elif proprio == 'sophie' %}
+                    <h5 class="card-title">Photos Sophie</h5>
+                    <p class="card-text">Vous trouverez bientôt les archives photos de Sophie ici...</p>
+                {% elif proprio == 'autres' %}
+                    <h5 class="card-title">Photos autres</h5>
+                    <p class="card-text">Vous trouverez bientôt les archives photos divers ici...</p>
+                {% else %}
+                    <h5 class="card-title">Archives phtotos</h5>
+                    <p class="card-text">veuillez sélectionner les archives de quelqu'un...</p>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% elif page == 'admin' %}
+    <div class="alert alert-danger my-3 alert-dismissible">
+            <button type="button float-left" class="close" data-dismiss="alert">×</button>
+            <strong>vous êtes dans les archives administratives</strong> mais la page n'existe pas encore...
+    </div>
+        {% endif%}-->
+        <script src="{{ url_for('static', filename='scripts/archives.js') }}"></script>       
+{% endblock %}
+

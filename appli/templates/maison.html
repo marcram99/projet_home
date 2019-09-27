@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block menu %}
+    {% block navbar %}
+        {{ super() }}
+    {% endblock %}
+{% endblock %}
+
+{% block maison %} 
+<div class="row m-3 p-3"><h1>Maison</h1></div>
+<div class="row m-3">
+    <div class="card mx-2" style="width: 18rem;">
+        <img src="{{ url_for('static', filename='images/pic01.png') }}"  class="card-img-top" alt="maison">
+        <div class="card-body">
+        <h5 class="card-title">Maison</h5>
+        <p class="card-text">Tout ce qui concerne la maison (alarme, stores, chauffage, eau, gaz,électricité...)</p>
+        <a href="#" class="btn btn-primary">Entrer</a>
+        </div>
+    </div>
+    <div class="card mx-2" style="width: 18rem;">
+            <img src="{{ url_for('static', filename='images/pic02.png') }}"  class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">Piscine</h5>
+            <p class="card-text">Tout ce qui concerne la piscine (pompe, filtration, rideau, tuyauterie, traitement eau...)</p>
+            <a href="#" class="btn btn-primary">Entrer</a>
+            </div>
+        </div>
+        <div class="card mx-2" style="width: 18rem;">
+                <img src="{{ url_for('static', filename='images/pic03.png') }}"  class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">Appareil</h5>
+                <p class="card-text">Tout ce qui concerne les appareils (TV, Tablette, Ordi, machine à laver, secher, jouets...)</p>
+                <a href="#" class="btn btn-primary">Entrer</a>
+                </div>
+            </div>
+</div>
+{% endblock %}
