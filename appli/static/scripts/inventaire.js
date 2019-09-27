@@ -1,8 +1,6 @@
 var nb = document.getElementById("nb_elem").innerHTML 
-function recup_id(id){
-    console.log("poubelle no:" + id.id)
-    var ident = "tab_db_" + id.id.slice(-1) + "_id"
-    var db_id = document.getElementById(ident).innerHTML
+function efface(id){
+    var db_id = get_db_id(id)
     $.post("/inventaire2/",
         {'command':'del',
          'ligne':id.id,
@@ -15,4 +13,9 @@ function recup_id(id){
             } 
         }
     )
+}
+function get_db_id(id){
+    var ident = "tab_db_id_" + id.id.slice(-1)
+    var db_id = document.getElementById(ident).innerHTML
+    return db_id
 }

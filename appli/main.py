@@ -79,6 +79,7 @@ def inventaire2():
         params = request.form.to_dict()
         if params['command'] == 'del':
             db_del('cave',params['db_id'])
+            print('DEBUG: {}'.format(params['db_id']))
             return json.dumps({'message':'ok'})
     return render_template('inventaire2.html',
                            db=db,

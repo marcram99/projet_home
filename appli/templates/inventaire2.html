@@ -27,15 +27,15 @@
                                 <tbody>
                                     {% for elem in db %}  
                                         <tr id="tabl_db_{{ loop.index }}">
-                                            <th scope="row">{{ loop.index }}<span id="tab_db_{{ loop.index }}_id"class="invisible">{{ elem.id }}</span></th>
-                                            <td id="tab_db_{{ loop.index }}_art">{{ elem.article }}</td>
-                                            <td id="tab_db_{{ loop.index }}_qua">{{ elem.quantite }}</td>
-                                            <td id="tab_db_{{ loop.index }}_per">{{ elem.peremption }}</td>
-                                            <td><button class="btn" id="trash_{{ loop.index }}" onclick="recup_id(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
+                                            <th scope="row">{{ loop.index }}<span id="tab_db_id_{{ loop.index }}" class="invisible">{{ elem.id }}</span></th>
+                                            <td id="tab_db_art_{{ loop.index }}">{{ elem.article }}</td>
+                                            <td id="tab_db_qua_{{ loop.index }}">{{ elem.quantite }}</td>
+                                            <td id="tab_db_per_{{ loop.index }}">{{ elem.peremption }}</td>
+                                            <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
                                         </tr>
                                         {% if loop.last %}
                                             {% set nb_elem = loop.length %}
-                                            <h5 class="my-2">Cave <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann> </h5>
+                                            <h5 class="my-2">Cave <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann><spann class="btn btn-success btn-sm rounded-circle m-2">+</spann></h5>
                                             
                                         {% endif%}
                                     {% endfor %}
@@ -49,7 +49,7 @@
                 <div class="card mx-3 mt-4" >
                     <div class="card-body">
                         <h5 class="card-title">Congel</h5>
-                        <p class="card-text">d title and make up thSome quick example text to build on the care bulk of the card's content.</p>    
+                        <p class="card-text">Be patient... work in progress.</p>    
                     </div>
                 </div>
             </div>
