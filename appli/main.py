@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config.from_object(Configuration)
 
 from .fonctions import connection, recup_db, add_db, del_db, mod_db
-from .fonctions import db_recup, db_del
+from .fonctions import db_recup, db_del, db_add
 from . import models
 from .models import Cave, Congel, Users
 
@@ -79,8 +79,12 @@ def inventaire2():
         params = request.form.to_dict()
         if params['command'] == 'del':
             db_del('cave',params['db_id'])
-            print('DEBUG: {}'.format(params['db_id']))
             return json.dumps({'message':'ok'})
+        if params['command'] == 'add':
+            donnees = [params['article'], params['quantité'], params['date_fin']]
+            db_add('cave', donnees)
+            return json.dumps({'message':'ok'})
+
     return render_template('inventaire2.html',
                            db=db,
                            )

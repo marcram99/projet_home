@@ -35,8 +35,10 @@
                                         </tr>
                                         {% if loop.last %}
                                             {% set nb_elem = loop.length %}
-                                            <h5 class="my-2">Cave <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann><spann class="btn btn-success btn-sm rounded-circle m-2">+</spann></h5>
-                                            
+                                            <div class="d-flex">
+                                                <h5 class="my-2 mt-n1 mr-auto">Cave <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
+                                                <spann id="db_add" class="btn btn-success rounded-sm m-2 font-weight-bolder ml-auto mt-n2"data-toggle="modal" data-target="#new_article"> + </spann>
+                                            </div>
                                         {% endif%}
                                     {% endfor %}
                                 </tbody>
@@ -55,5 +57,30 @@
             </div>
         </div>
     </div>
+
+<!-- The Modal -->
+<div class="modal" id="new_article">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Création d'un nouvel article</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <label for="new_art_nom">Article:</label>
+            <input type="text" class="form-control" id="new_art_nom" name="uname" required>
+            <label for="new_art_quant" class="mt-2">Quantité:</label>
+            <input type="text" class="form-control" id="new_art_quant" name="uname">
+            <label for="new_art_quant" class="mt-2">Date de péremption:</label>
+            <input type="text" class="form-control" id="new_art_date" name="uname">
+        </div>
+        <div class="modal-footer">
+          <button id="art_valide" type="button" class="btn btn-success" data-dismiss="modal">Ajouter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
     <script src="{{ url_for('static', filename='scripts/inventaire.js') }}"></script>
 {% endblock%}

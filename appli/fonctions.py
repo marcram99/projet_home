@@ -34,6 +34,14 @@ def db_del(dbase, id):
     db.session.commit()
     print('DEBUG: delete article avec id: {}'.format(id))
 
+def db_add(dbase, donnees):
+    database = {'cave': Cave, 'congel': Congel, 'users': Users}
+    article, nb, périmé = donnees
+    db.session.add(database[dbase](article, nb, périmé, 'non'))
+    db.session.commit()
+    print('DEBUG: ajout article ')
+
+
 
   
 
