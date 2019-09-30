@@ -18,10 +18,9 @@ def connection(host,port):
         conn_message = erreur
         temp = 0
         hum = 0
-
     return temp, hum, conn_message
 
-# ------------ new db --------------------------
+
 def db_recup(dbase):
     database = {'cave': Cave, 'congel': Congel, 'users': Users}
     resultat = database[dbase].query.all()
@@ -40,11 +39,6 @@ def db_add(dbase, donnees):
     db.session.add(database[dbase](article, nb, périmé, 'non'))
     db.session.commit()
     print('DEBUG: ajout article ')
-
-
-
-  
-
 
 # ------------ old db --------------------------
 def recup_db(db):

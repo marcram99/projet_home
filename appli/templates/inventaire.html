@@ -1,138 +1,96 @@
 {% extends "base.html" %}
 {% block inventaire %}
-<div class="container.fluid">
-    <div class="row ">
-        <div class="card col-sm">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs ">
-                    <li class="nav-item">
-                        <a class="nav-link {{ [db, 'Cave']|focus_page }}" href="{{ url_for('inventaire', database='Cave') }}">Cave</a>
-                    </li>
-                    <li class="nav-item">  
-                        <a class="nav-link {{ [db, 'Congel']|focus_page }}" href="{{ url_for('inventaire', database='Congel') }}">Congélateur</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ [db, 'Users']|focus_page }}"  href="{{ url_for('inventaire', database='Users') }}">Users</a>
-                    </li>
-                </ul> 
-            </div>
-            <form action='' method='post'>
-                <div class="card-body mt-3">
-                
-                <div class="col-xl-7 mx-3">
-                    <table class="table table-borderless table-sm">
-                        <thead class="thead">
-                            <tr class="row  border rounded-lg">
-                                <th class="col-{{ entete[0][1] }}">{{ entete[0][0] }}</th>
-                                <th class="col-{{ entete[1][1] }}">{{ entete[1][0] }}</th>
-                                <th class="col-{{ entete[2][1] }}">{{ entete[2][0] }}</th>
-                                <!--th class="col-{{ entete[3][1] }}">{{ entete[3][0] }}</th-->
-                                <th class="col-2 text-center">actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for lignes in liste_db %}
-                            {% if lignes[0] != modif_db %}
-                                <tr class="row">
-                                    <td class="col-{{ entete[0][1] }} border-bottom">{{ lignes[1] }}</td>
-                                    <td class="col-{{ entete[1][1] }} border-bottom">{{ lignes[2] }}</td>
-                                    <td class="col-{{ entete[2][1] }} border-bottom">{{ lignes[3] }}</td>
-                                    <!--td class="col-{{ entete[3][1] }} border-bottom">{{ lignes[4] }}</td-->
-                                    <td class="col-3 text-center border-bottom">
-                                        <button  class='btn' name="supp" value='del_{{ lignes[0] }}' style='background-color:transparent;'> <i class="fa fa-trash-o mr-2  mt-n2" ></i></button>
-                                        <button  class='btn' name="modif" value='mod_{{ lignes[0] }}' style='background-color:transparent;'><i class="fa fa-pencil  mt-n2" ></i></button>
-                                    </td>
+    <div class="container.fluid m-3">
+        <ul class="nav nav-pills mx-3 my-2" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class=" btn btn-success active mr-2" id="pills-cave-tab" data-toggle="pill" href="#pills-cave" role="tab" aria-controls="pills-cave" aria-selected="true">Cave</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-success mx-2" id="pills-congel-tab" data-toggle="pill" href="#pills-congel" role="tab" aria-controls="pills-congel" aria-selected="false">Congel</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-success ml-2" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab" aria-controls="pills-users" aria-selected="false">Users</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <!--------- Inventaire cave --------->
+            <div class="tab-pane fade show active" id="pills-cave" role="tabpanel" aria-labelledby="pills-cave-tab">
+                <div class="card mx-3 mt-4">
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Article</th>
+                                <th scope="col">Quantité</th>
+                                <th scope="col">périmé le:</th>
+                                <th scope="col">actions</th>
                                 </tr>
-                            {% else %}
-                                <tr class="row">
-                                    <td class="col-{{ entete[0][1] }}"><input type="text" value="{{ lignes[1] }}" class="form-control form-control-sm " name="article"></class></td>
-                                    <td class="col-{{ entete[1][1] }}">
-                                        <div class="form-group">
-                                            <select class="custom-select" name="nb">
-                                                <option value = 1>1</option>
-                                                <option value = 2>2</option>
-                                                <option value = 3>3</option>
-                                                <option value = 4>4</option>
-                                            </select>
-                                        </div> 
-                                    </td>
-                                    <td class="col-{{ entete[2][1] }}"><input type="date" value="{{ lignes[3] }}"class="form-control form-control-sm " name="périmé"></class></td>
-                                    <!--td class="col-1"><input type="text" value="{{ lignes[4] }}"class="form-control form-control-sm " name="mail"></class></td-->
-                                    <td class="col-3 text-center">
-                                        <button class='btn' name="modify" value='mod_no' style='background-color:transparent;'><i class="fa fa fa-close mr-2 fa-2x mt-n2" style='color:red;'></i></button>
-                                        <button class='btn' name="modify" value='{{ modif_db }}_mod_yes' style='background-color:transparent;'><i class="fa fa-check fa-2x mt-n2" style='color:green;' ></i></button>
-                                    </td>
-                                </tr> 
-                            {% endif %}
-                        {% endfor %} 
-                        {% if modif_db == '' %}
-                            <tr class="row pt-2 border border-success rounded-lg ">
-                                <td class="col-{{ entete[0][1] }} mt-2 "><input type="text" class="form-control form-control-sm " name="article"></class></td>
-                                <td class="col-{{ entete[1][1] }}">
-                                    <div class="form-group">
-                                        <select class="custom-select mt-1" name="nb">
-                                            <option value = 1>1</option>
-                                            <option value = 2>2</option>
-                                            <option value = 3>3</option>
-                                            <option value = 4>4</option>
-                                            <option value = 5>5</option>
-                                        </select>
-                                    </div> 
-                                </td>
-                                <td class="col-{{ entete[2][1] }} mt-2"><input type="date" class="form-control form-control-sm " name="périmé"></class></td>
-                                <!--td class="col-{{ entete[3][1] }} mt-2"><input type="text" class="form-control form-control-sm " name="mail"></class></td-->
-                                <td class="col-2 text-center mt-2"><button class='btn' name="ajout" value='ajouter' style='background-color:transparent;'><i class="fa fa-plus-square fa-2x mt-n2" style='color:green;'></i></button></td>
-                            </tr>
-                        {% endif %}   
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for elem in db %}  
+                                    <tr id="tabl_db_{{ loop.index }}">
+                                        <th scope="row">{{ loop.index }}<span id="tab_db_id_{{ loop.index }}" class="invisible">{{ elem.id }}</span></th>
+                                        <td id="tab_db_art_{{ loop.index }}">{{ elem.article }}</td>
+                                        <td id="tab_db_qua_{{ loop.index }}">{{ elem.quantite }}</td>
+                                        <td id="tab_db_per_{{ loop.index }}">{{ elem.peremption }}</td>
+                                        <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
+                                    </tr>
+                                    {% if loop.last %}
+                                        {% set nb_elem = loop.length %}
+                                        <div class="d-flex">
+                                            <h5 class="my-2 mt-n1 mr-auto">Cave <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
+                                            <spann id="db_add" class="btn btn-success rounded-sm m-2 font-weight-bolder ml-auto mt-n2"data-toggle="modal" data-target="#new_article"> + </spann>
+                                        </div>
+                                    {% endif%}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            </div>
+            <!--------- Inventaire congel --------->
+            <div class="tab-pane fade" id="pills-congel" role="tabpanel" aria-labelledby="pills-congel-tab">
+                <div class="card mx-3 mt-4" >
+                    <div class="card-body">
+                        <h5 class="card-title">Congel</h5>
+                        <p class="card-text">Be patient... work in progress.</p>    
+                    </div>
                 </div>
-            </form>
+            </div>
+            <!--------- Inventaire users --------->
+            <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+                <div class="card mx-3 mt-4" >
+                    <div class="card-body">
+                        <h5 class="card-title">Users</h5>
+                        <p class="card-text">Be patient... work in progress...</p>    
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>        
+    <!--------- Modal ajout article --------->
+    <div class="modal" id="new_article">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Création d'un nouvel article</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label for="new_art_nom">Article:</label>
+                    <input type="text" class="form-control" id="new_art_nom" name="uname" required>
+                    <label for="new_art_quant" class="mt-2">Quantité:</label>
+                    <input type="text" class="form-control" id="new_art_quant" name="uname">
+                    <label for="new_art_quant" class="mt-2">Date de péremption:</label>
+                    <input type="text" class="form-control" id="new_art_date" name="uname">
+                </div>
+                <div class="modal-footer">
+                    <button id="art_valide" type="button" class="btn btn-success" data-dismiss="modal">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!--
-    <h2><u> Inventaire du congélateur</u> </h2>
-    </br>
-    <table class='tableau'>
-        <form action='' method='post'>
-        <tr>
-            <th>article</th><th>quantité</th><th>date péremption</th><th>action</th>
-        </tr>
-            {% for lignes in congel %}
-                <tr> 
-                    <td>{{ lignes[1] }}</td><td>{{ lignes[2] }}</td><td>{{ lignes[3] }}</td>
-                    <td><button class='inv_bouton' name='mod_inv' type='submit' value='del_{{ lignes[0] }}' /> DEL</td>
-                </tr>
-            {% endfor%}
-        <tr>
-            </form>
-            <form action='' method='post'>
-                <td><input type="text" id='article' name='article' required maxlength="40" size="40"></td>
-                <td><input type="text" id='quantite' name='quantite' required maxlength="3" size="10"></td>
-                <td><input type="text" id='date' name='date'  maxlength="40" size="20"></td>
-                <td><button class='inv_bouton' name='mod_inv' type='submit' value='ajout' /> Ajout article</td>
-            </form>
-        </tr>   
-    </table>
-    </br>
-
-
-    <h2><u> Inventaire des utilisateurs du site</u> </h2>
-    <table class='tableau'>
-        <tr>
-            <th>user</th><th>mdp</th><th>mail</th><th>droits</th>
-        </tr>
-        {% for lignes in users %}
-                <tr> 
-                {% for details in lignes %}
-                    <td>{{ details }}</td> 
-                {% endfor%}
-            </tr>
-        {% endfor%}    
-    </table>
-</div>        -->
+    <script src="{{ url_for('static', filename='scripts/inventaire.js') }}"></script>
 {% endblock%}
-

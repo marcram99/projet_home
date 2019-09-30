@@ -1,70 +1,35 @@
 {% extends "base.html" %}
 {% block archives %}
-<div class="container.fluid">
-        <div class="row ">
-            <div class="card col-sm">
-                <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs ">
-                        <li class="nav-item">
-                            <a id="tab_photo" class="nav-link active" href="#">Photos</a>
-                        </li>
-                        <li class="nav-item">  
-                            <a id="tab_admin"class="nav-link" href="#">Administratif</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link "  href="#">Users</a>
-                        </li>
-                    </ul> 
-                </div>
-                <form action='' method='post'>
-                    <div class="card-body mt-3">
-                        <div class="col-xl-7 mx-3"> </div>
+<div class="container.fluid m-3">
+        <ul class="nav nav-pills mx-3 my-2" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class=" btn btn-success active mr-2" id="pills-photos-tab" data-toggle="pill" href="#pills-photos" role="tab" aria-controls="pills-photos" aria-selected="true">Photos</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-success mx-2" id="pills-admin-tab" data-toggle="pill" href="#pills-admin" role="tab" aria-controls="pills-admin" aria-selected="false">Administratif</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <!--------- Inventaire cave --------->
+            <div class="tab-pane fade show active" id="pills-photos" role="tabpanel" aria-labelledby="pills-photos-tab">
+                <div class="card mx-3 mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Photos</h5>
+                        <p class="card-text">Be patient... work in progress.</p>                           
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
-    </div>        
-<!--div class="container.fluid">
-{% if page == 'photo' %}
-    <div class="row">
-        <div class="col xs-6 ">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link {{ [proprio, 'marc']|focus_page }}" href="{{ url_for('archives', page='photo',proprio='marc') }}">Marc</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ [proprio, 'sophie']|focus_page }}" href="{{ url_for('archives', page='photo',proprio='sophie') }}">Sophie</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link [proprio, 'autres']|focus_page"  href="{{ url_for('archives', page='photo',proprio='autres') }}" tabindex="-1" aria-disabled="true">Autres...</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                {% if proprio == 'marc' %}
-                    <h5 class="card-title">Photos Marc</h5>
-                    <p class="card-text">Vous trouverez bientôt les archives photos de Marc ici...</p>
-                {% elif proprio == 'sophie' %}
-                    <h5 class="card-title">Photos Sophie</h5>
-                    <p class="card-text">Vous trouverez bientôt les archives photos de Sophie ici...</p>
-                {% elif proprio == 'autres' %}
-                    <h5 class="card-title">Photos autres</h5>
-                    <p class="card-text">Vous trouverez bientôt les archives photos divers ici...</p>
-                {% else %}
-                    <h5 class="card-title">Archives phtotos</h5>
-                    <p class="card-text">veuillez sélectionner les archives de quelqu'un...</p>
-
-                {% endif %}
+            <!--------- Inventaire congel --------->
+            <div class="tab-pane fade" id="pills-admin" role="tabpanel" aria-labelledby="pills-admin-tab">
+                <div class="card mx-3 mt-4" >
+                    <div class="card-body">
+                        <h5 class="card-title">Administratif</h5>
+                        <p class="card-text">Be patient... work in progress.</p>    
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-{% elif page == 'admin' %}
-    <div class="alert alert-danger my-3 alert-dismissible">
-            <button type="button float-left" class="close" data-dismiss="alert">×</button>
-            <strong>vous êtes dans les archives administratives</strong> mais la page n'existe pas encore...
-    </div>
-        {% endif%}-->
         <script src="{{ url_for('static', filename='scripts/archives.js') }}"></script>       
 {% endblock %}
 
