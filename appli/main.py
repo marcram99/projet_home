@@ -1,12 +1,13 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask_login import LoginManager
+from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import config
 from config import Configuration
 
 app = Flask(__name__)
 app.config.from_object(Configuration)
-login = LoginManager(app)
+
 
 from .fonctions import connection, db_recup, db_del, db_add 
 from . import models
@@ -66,6 +67,19 @@ def raspberry():
     pi2 = connection(config.pi2_conf[0], config.pi2_conf[1])"""
     return render_template('raspberry.html')
 
-@app.route('/login', methods=['POST', 'GET'])
+@app.route('/login')
 def login():
     return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login_post():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    remember = True if request.form.get('remember') else False
+
+    user = Users.query.filter_by(nom=username).first()
+    if not user or not check_password_hash(user.mdp, password): 
+        flash('Please check your login details and try again.')
+        return redirect(url_for('login')) 
+    return redirect(url_for('index'))
+    

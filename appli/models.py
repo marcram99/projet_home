@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import logging as lg
 
 from .main import app
@@ -64,7 +65,7 @@ class Users(db.Model):
     
     def __init__(self, nom, mdp, mail, droits):
         self.nom = nom
-        self.mdp = mdp
+        self.mdp = generate_password_hash(mdp, method='sha256')
         self.mail = mail
         self.droits = droits
 
