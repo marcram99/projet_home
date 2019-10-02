@@ -59,11 +59,38 @@
                 </div>
             </div>
             <!--------- Inventaire users --------->
-            <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
-                <div class="card mx-3 mt-4" >
+            <div class="tab-pane fade show " id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+                <div class="card mx-3 mt-4">
                     <div class="card-body">
-                        <h5 class="card-title">Users</h5>
-                        <p class="card-text">Be patient... work in progress...</p>    
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Mot de passe</th>
+                                <th scope="col">mail</th>
+                                <th scope="col">droits</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for elem in db %}  
+                                    <tr id="tabl_db_{{ loop.index }}">
+                                        <th scope="row">{{ loop.index }}<span id="tab_db_id_{{ loop.index }}" class="invisible">{{ elem.id }}</span></th>
+                                        <td id="tab_db_art_{{ loop.index }}">{{ elem.nom }}</td>
+                                        <td id="tab_db_qua_{{ loop.index }}">{{ elem.mdp }}</td>
+                                        <td id="tab_db_per_{{ loop.index }}">{{ elem.mail }}</td>
+                                        <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
+                                    </tr>
+                                    {% if loop.last %}
+                                        {% set nb_elem = loop.length %}
+                                        <div class="d-flex">
+                                            <h5 class="my-2 mt-n1 mr-auto">Users <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
+                                            <spann id="db_add" class="btn btn-success rounded-sm m-2 font-weight-bolder ml-auto mt-n2"data-toggle="modal" data-target="#new_article"> + </spann>
+                                        </div>
+                                    {% endif%}
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

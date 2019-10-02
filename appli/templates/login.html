@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block login %}
     <div class="container m-3">
-        <div class="card mx-3 mt-4">
+        <div class="card mx-3 mt-4"style="width:500px;">
             <div class="card-body ">
                 <h5 class="card-title">Login</h5>
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
-                        <div class="notification is-danger">
+                        <div class="alert alert-danger">
                             {{ messages[0] }}
                         </div>
                     {% endif %}
                 {% endwith %}
                 <!--------- login --------->
-                <form action="/login">
+                <form action="/login" method="POST">
                     <div class="form-group ">
-                      <input type="text" class="form-control" placeholder="Entrez votre nom: " id="username">
+                      <input type="text" class="form-control" placeholder="Entrez votre nom: " name="username">
                     </div>
                     <div class="form-group ">
-                      <input type="password" class="form-control" placeholder="Entrez votre mot de passe:"id="pwd">
+                      <input type="password" class="form-control" placeholder="Entrez votre mot de passe:" name="pwd">
                     </div>
                     <div class="form-group form-check ">
                       <label class="form-check-label ">
@@ -30,5 +30,4 @@
             </div>
         </div>
     </div> 
-   
 {% endblock %}

@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 import logging as lg
 
 from .main import app
@@ -52,7 +53,7 @@ class Congel(db.Model):
         return 'article:{} / nb: {} / perim.: {}'.format(self.article, self.quantite, self.peremption)
 
 
-class Users(db.Model):
+class Users(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(20), nullable=False)

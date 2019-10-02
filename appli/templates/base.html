@@ -38,7 +38,16 @@
                         </ul> 
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                    <a id="m_login"class="btn btn-dark " href="{{ url_for('login') }}">Login</a>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="m_users" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Utilisateurs
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a id="m_login" class="dropdown-item" href="{{ url_for('login') }}">Login</a>
+                                            <a id="m_logout" class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                         </ul>

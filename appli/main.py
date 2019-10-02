@@ -1,5 +1,5 @@
-from flask import Flask, redirect, render_template, request, url_for
-from flask_login import LoginManager
+from flask import Flask, redirect, render_template, request, url_for, flash
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import config
@@ -8,12 +8,22 @@ from config import Configuration
 app = Flask(__name__)
 app.config.from_object(Configuration)
 
-
 from .fonctions import connection, db_recup, db_del, db_add 
 from . import models
 from .models import Cave, Congel, Users
 
 db_select = {'Cave': Cave, 'Congel': Congel, 'Users': Users}
+
+# ------ configuration du login manager
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    # since the user_id is just the primary key of our user table, use it in the query for the user
+    return Users.query.get(int(user_id))
+
 
 @app.template_filter()
 def focus_page(val):
@@ -28,7 +38,7 @@ def index():
 
 @app.route('/inventaire/', methods=['POST', 'GET'])
 def inventaire():
-    db = db_recup('cave')
+    db = db_recup('users')
     if request.method =='POST':
         params = request.form.to_dict()
         if params['command'] == 'del':
@@ -43,6 +53,7 @@ def inventaire():
                            )
 
 @app.route('/archives', methods=['POST', 'GET'])
+@login_required
 def archives():
     return render_template('archives.html',
                            method='POST',
@@ -69,17 +80,29 @@ def raspberry():
 
 @app.route('/login')
 def login():
+    print('DEBUG: login')
     return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def login_post():
+    print('DEBUG: login post')
     username = request.form.get('username')
-    password = request.form.get('password')
+    password = request.form.get('pwd')
     remember = True if request.form.get('remember') else False
-
     user = Users.query.filter_by(nom=username).first()
+    print('DEBUG: user = {}'.format(user))
     if not user or not check_password_hash(user.mdp, password): 
-        flash('Please check your login details and try again.')
+        flash('Il y a une erreur dans votre login / mdp, veuillez réessayer...')
         return redirect(url_for('login')) 
+    flash(user.nom)
+    login_user(user, remember=remember)
+    print("DEBUG: login_user={}".format(user))
+    return redirect(url_for('index'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Déconnexion réusie!')
     return redirect(url_for('index'))
     
