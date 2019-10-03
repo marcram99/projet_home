@@ -17,26 +17,21 @@ db_select = {'Cave': Cave, 'Congel': Congel, 'Users': Users}
 # ------ configuration du login manager
 login_manager = LoginManager()
 login_manager.login_view = 'login'
+login_manager.login_message = u"Vous devez être connecté pour accéder à cette page..."
 login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
     # since the user_id is just the primary key of our user table, use it in the query for the user
     return Users.query.get(int(user_id))
-
-
-@app.template_filter()
-def focus_page(val):
-    """ permet d'activer le focus en renvoyant 'active'
-        en params: une liste de 2 valeurs qui seront comparée, l'égalité des valeurs revoie 'active'"""
-    if val[0] == val[1]:
-        return 'active'
+   
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
     return render_template('main.html')
 
 @app.route('/inventaire/', methods=['POST', 'GET'])
+@login_required
 def inventaire():
     db = db_recup('users')
     if request.method =='POST':
@@ -64,9 +59,9 @@ def archives():
 def documentation():
     return render_template('documentation.html')
 
-@app.route('/maison', methods=['POST', 'GET'])
-def maison():
-    return render_template('maison.html')
+@app.route('/documents', methods=['POST', 'GET'])
+def documents():
+    return render_template('documents.html')
 
 @app.route('/piscine', methods=['POST', 'GET'])
 def piscine():
@@ -92,7 +87,7 @@ def login_post():
     user = Users.query.filter_by(nom=username).first()
     print('DEBUG: user = {}'.format(user))
     if not user or not check_password_hash(user.mdp, password): 
-        flash('Il y a une erreur dans votre login / mdp, veuillez réessayer...')
+        flash('ERREUR !!!  veuillez réessayer...')
         return redirect(url_for('login')) 
     flash(user.nom)
     login_user(user, remember=remember)

@@ -27,7 +27,7 @@
                                 <a d="m_inv"class="btn btn-dark" href="{{ url_for('inventaire') }}">Inventaires</a>
                             </li>
                             <li class="nav-item">
-                                <a id="m_mais"class="btn btn-dark" href="{{ url_for('maison') }}">Maison</a>
+                                <a id="m_mais"class="btn btn-dark" href="{{ url_for('documents') }}">Documentation</a>
                             </li>
                             <li class="nav-item">
                                 <a id="m_mais"class="btn btn-dark" href="{{ url_for('piscine') }}">Piscine</a>
@@ -43,9 +43,16 @@
                                             Utilisateurs
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a id="m_login" class="dropdown-item" href="{{ url_for('login') }}">Login</a>
-                                            <a id="m_logout" class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a id="m_login" class="dropdown-item " href="{{ url_for('login') }}">
+                                                {% if current_user.is_authenticated %}
+                                                    {{ current_user.nom }}
+                                                {% else %}
+                                                    Login
+                                                {% endif %}
+                                            </a>
+                                            <a class="dropdown-item" href="#">Paramètres</a>
+                                            <a id="m_logout" class="dropdown-item border border-bottom-0 " href="{{ url_for('logout') }}"><i class="fa fa-power-off fa-lg my-1 mr-2" ></i>Logout</a>
+
                                         </div>
                                     </div>
                                 </div>
