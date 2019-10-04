@@ -30,10 +30,10 @@ def load_user(user_id):
 def index():
     return render_template('main.html')
 
-@app.route('/inventaire/', methods=['POST', 'GET'])
+@app.route('/inventaire/<database>', methods=['POST', 'GET'])
 @login_required
-def inventaire():
-    db = db_recup('users')
+def inventaire(database):
+    db = db_recup(database)
     if request.method =='POST':
         params = request.form.to_dict()
         if params['command'] == 'del':

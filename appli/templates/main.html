@@ -6,16 +6,16 @@
 {% endblock %}
 
 {% block inventaire %}  
-    <div class="container-fluid">
+    <div class="container">
         <div class="row ml-3 mt-3">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        <div class="alert alert-info alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <strong>{{ messages[0] }} </strong> 
-                        </div>
-                    {% endif %}
-                {% endwith %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>{{ messages[0] }} </strong> 
+                    </div>
+                {% endif %}
+            {% endwith %}
         </div>
         <div class="row ml-3 mt3">
             <div class="col-xs text-white">
@@ -27,5 +27,7 @@
                 <p>-sous Divers: accès à différentes expérimentations perso...</p><br/>
                 <p>Pour pouvoir avoir accès aux autres pages du site, il faut s'identifier! (bouton en haut à droite).</p>
             </div>
+        </div>
+    </div>
             
 {% endblock %} 
