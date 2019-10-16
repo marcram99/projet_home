@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content = "width=device-width, initial-scale=1.0">
         <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap/bootstrap.min.css') }}">
+        <link rel="stylesheet" href = "{{ url_for('static', filename='style.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
         <script src="{{ url_for('static', filename='bootstrap/jquery-3.4.1.min.js') }}"></script>
@@ -28,7 +29,7 @@
                                     <a d="m_inv"class="btn btn-dark" href="{{ url_for('inventaire', database='cave') }}">Inventaires</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a id="m_mais"class="btn btn-dark" href="{{ url_for('documents') }}">Documentation</a>
+                                    <a id="m_mais"class="btn btn-dark" href="{{ url_for('documents', section='root') }}">Documentation</a>
                                 </li>
                                 <li class="nav-item">
                                     <a id="m_rasp"class="btn btn-dark disabled" href="{{ url_for('raspberry') }}">Raspberry</a>
@@ -42,11 +43,10 @@
                                                     <i class="fa fa-user-circle-o fa-lg my-1 mr-2" ></i>{{ current_user.nom }}
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                                  
-                                                <a class="dropdown-item" href="#"><i class="fa fa-cog fa-lg my-1 mr-2" ></i>Mes paramètres</a>
+                                                <a class="dropdown-item" href="{{ url_for('user',u_conected= current_user.nom ) }}"><i class="fa fa-cog fa-lg my-1 mr-2" ></i>Mes paramètres</a>
                                                 <a class="dropdown-item border border-bottom-0" href="#"><i class="fa fa-envelope-o fa-lg my-1 mr-2" ></i>Aucun message</a>
                                                 <a class="dropdown-item" href="#"><i class="fa fa-bell-o fa-lg my-1 mr-2" ></i>Aucune notification</a>
                                                 <a id="m_logout" class="dropdown-item border border-bottom-0 " href="{{ url_for('logout') }}"><i class="fa fa-power-off fa-lg my-1 mr-2" ></i>Logout</a>
-
                                             </div>
                                         </div>
                                     {% else %}
@@ -61,16 +61,16 @@
                 </nav>
                  
             {% endblock %} 
-        {% endblock %} 
- 
-        {% block inventaire %} {% endblock %}
+        {% endblock %}
+        {% block mainpage %} {% endblock %}
         {% block archives %} {% endblock %}
+        {% block inventaire %} {% endblock %}
         {% block documentation %} {% endblock %}
         {% block raspberry %} {% endblock %}
-        {% block piscine %} {% endblock %}
-        {% block maison %} {% endblock %}
-        {% block divers %} {% endblock %} 
-        {% block login %} {% endblock %}
 
+        {% block vide %} {% endblock %}
+
+        {% block user %} {% endblock %} 
+        {% block login %} {% endblock %}
     </body>
 </html>

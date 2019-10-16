@@ -2,6 +2,7 @@ from flask import Flask, redirect, render_template, request, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
+import os
 import config
 from config import Configuration
 
@@ -25,7 +26,6 @@ def load_user(user_id):
     # since the user_id is just the primary key of our user table, use it in the query for the user
     return Users.query.get(int(user_id))
    
-
 @app.route('/', methods=['POST', 'GET'])
 def index():
     return render_template('main.html')
@@ -37,35 +37,37 @@ def inventaire(database):
     if request.method =='POST':
         params = request.form.to_dict()
         if params['command'] == 'del':
-            db_del('cave',params['db_id'])
+            db_del(database, params['db_id'])
             return json.dumps({'message':'ok'})
         if params['command'] == 'add':
-            donnees = [params['article'], params['quantité'], params['date_fin']]
-            db_add('cave', donnees)
+            if database in ['cave', 'congel']:
+                donnees = [params['article'], params['quantité'], params['date_fin']]           
+            db_add(database, donnees)
             return json.dumps({'message':'ok'})
     return render_template('inventaire.html',
+                           database=database,
                            db=db,
                            )
 
 @app.route('/archives', methods=['POST', 'GET'])
 @login_required
 def archives():
+    chemin = '/Users/mcwa//Pictures/Pictures'
+    liste_dir = os.listdir(chemin)
     return render_template('archives.html',
-                           method='POST',
-                           menu='archives',
+                           liste=liste_dir,
                           )
-
-@app.route('/documentation', methods=['POST', 'GET'])
-def documentation():
-    return render_template('documentation.html')
 
 @app.route('/documents', methods=['POST', 'GET'])
 def documents():
-    return render_template('documents.html')
+    return render_template('documents.html'         
+                           )
 
-@app.route('/piscine', methods=['POST', 'GET'])
-def piscine():
-    return render_template('piscine.html')
+@login_required
+@app.route('/user/<u_conected>', methods=['POST', 'GET'])
+def user(u_conected):
+    return render_template('user.html',
+                           user=u_conected)
 
 @app.route('/raspberry', methods=['POST', 'GET'])
 def raspberry():

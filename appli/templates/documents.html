@@ -5,33 +5,79 @@
     {% endblock %}
 {% endblock %}
 
-{% block maison %} 
-<div class="container">
-    <h1 class="text-white my-2 mx-4">Documentation</h1>
-    <div class="row m-3">
-        <div class="card m-2 " style="width: 18rem;">
-            <i class="fa fa-home text-center my-2" style="font-size:80px;"></i>
-            <div class="card-body">
-                <h5 class="card-title">Maison</h5>
-                <p class="card-text">Tout ce qui concerne la maison (alarme, stores, chauffage, eau, gaz,électricité...)</p>
-                <a href="#" class="btn btn-success">Entrer</a>
+{% block documentation %} 
+    <div class="container">
+        <h1 class="text-white my-2 mx-4">Documentation</h1>
+        <div class="row m-3">
+            <div id="card_maison" class="card col-3 m-2">
+                <i class="fa fa-home text-center " style="font-size:80px;"></i>
+                <div class="card-body mt-n2">
+                    <h5 class="card-title">Maison</h5>
+                    <p class="card-text">Tout ce qui concerne la maison (alarme, stores, chauffage, eau, gaz,électricité...)</p>
+                </div>
+            </div>
+            <div id="card_jardin" class="card col-3 m-2">
+                <i class="fa fa-sun-o text-center my-2" style="font-size:80px;"></i>
+                <div class="card-body">
+                    <h5 class="card-title">Jardin & piscine</h5>
+                    <p class="card-text">Tout ce qui concerne la piscine (pompe, filtration, rideau, tuyauterie, traitement eau...)</p>
+                    
+                </div>
+            </div>
+            <div id="card_appareil" class="card col-3 m-2">
+                <i class="fa fa-bolt text-center my-2" style="font-size:80px;"></i>
+                <div class="card-body">
+                    <h5 class="card-title">Appareils</h5>
+                    <p class="card-text" >Tout ce qui concerne les appareils (TV, Tablette, Ordi, machine à laver, secher, jouets...)</p>
+                </div>
             </div>
         </div>
-        <div class="card m-2" style="width: 18rem;">
-            <i class="fa fa-shower text-center my-2" style="font-size:80px;"></i>
-            <div class="card-body">
-                <h5 class="card-title">Piscine</h5>
-                <p class="card-text">Tout ce qui concerne la piscine (pompe, filtration, rideau, tuyauterie, traitement eau...)</p>
-                <a href="#" class="btn btn-success">Entrer</a>
+        <div class="row m-3">
+            <div id="menu_maison" class="card col-3 m-2 d-none " >
+                <div class="card-body">
+                    <p class="card-text ">
+                        <div class="list-group ">
+                            <a href="#card_electricite" class="list-group-item list-group-item-action ">Electricité</a>
+                            <a href="#" class="list-group-item list-group-item-action">Eau & Gaz</a>
+                            <a href="#" class="list-group-item list-group-item-action">Chauffage</a>
+                            <a href="#" class="list-group-item list-group-item-action">Alarme</a>
+                            <a href="#" class="list-group-item list-group-item-action">Store</a>
+                            <a href="#card_cuisine" class="list-group-item list-group-item-action nav-item">Cuisine</a>  
+                        </div>
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="card m-2" style="width: 18rem;">
-            <i class="fa fa-bolt text-center my-2" style="font-size:80px;"></i>
-            <div class="card-body">
-                <h5 class="card-title">Appareil</h5>
-                <p class="card-text">Tout ce qui concerne les appareils (TV, Tablette, Ordi, machine à laver, secher, jouets...)</p>
-                <a href="#" class="btn btn-success">Entrer</a>
+            <div id="menu_jardin"class="card col-3 m-2 d-none">
+                <div class="card-body">
+                    <p class="card-text ">
+                        <div class="row m-3">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action ">Piscine</a>
+                                <a href="#" class="list-group-item list-group-item-action">Arrosage</a>
+                                <a href="#" class="list-group-item list-group-item-action">Matos cabane</a>
+                                <a href="#" class="list-group-item list-group-item-action">Cave & garage</a>
+                                <a href="#" class="list-group-item list-group-item-action">Store</a>
+                            </div>
+                        </div>
+                    </p>
+                </div>
             </div>
-        </div>
-</div>
+            <div id="menu_appareil"class="card col-3 m-2 d-none">
+                <div class="card-body">
+                    <p class="card-text ">
+                        <div class="row m-3">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action ">TV & Audio</a>
+                                <a href="#" class="list-group-item list-group-item-action">Ordinateurs</a>
+                                <a href="#" class="list-group-item list-group-item-action">Jeux enfants</a>
+                                <a href="#" class="list-group-item list-group-item-action">Beauty</a>
+                                <a href="#" class="list-group-item list-group-item-action">electro-ménager</a>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <script src="{{ url_for('static', filename='scripts/documents.js') }}"></script>
 {% endblock %}

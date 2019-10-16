@@ -1,101 +1,80 @@
 {% extends "base.html" %}
 {% block inventaire %}
     <div class="container">
-        <ul class="nav nav-pills mx-3 my-2" id="pills-tab" role="tablist">
-            <li class="nav-item">
-                <a class=" btn btn-success active mr-2" id="pills-cave-tab" data-toggle="pill" href="#pills-cave" role="tab" aria-controls="pills-cave" aria-selected="true">Cave</a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-success mx-2" id="pills-congel-tab" data-toggle="pill" href="#pills-congel" role="tab" aria-controls="pills-congel" aria-selected="false">Congel</a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-success ml-2" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab" aria-controls="pills-users" aria-selected="false">Users</a>
-            </li>
-        </ul>
-        <div class="tab-content" id="pills-tabContent">
-            <!--------- Inventaire cave --------->
-            <div class="tab-pane fade show active" id="pills-cave" role="tabpanel" aria-labelledby="pills-cave-tab">
-                <div class="card mx-3 mt-4">
-                    <div class="card-body">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Article</th>
-                                <th scope="col">Quantité</th>
-                                <th scope="col">périmé le:</th>
-                                <th scope="col">actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for elem in db %}  
-                                    <tr id="tabl_db_{{ loop.index }}">
-                                        <th scope="row">{{ loop.index }}<span id="tab_db_id_{{ loop.index }}" class="invisible">{{ elem.id }}</span></th>
-                                        <td id="tab_db_art_{{ loop.index }}">{{ elem.article }}</td>
-                                        <td id="tab_db_qua_{{ loop.index }}">{{ elem.quantite }}</td>
-                                        <td id="tab_db_per_{{ loop.index }}">{{ elem.peremption }}</td>
-                                        <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
-                                    </tr>
-                                    {% if loop.last %}
-                                        {% set nb_elem = loop.length %}
-                                        <div class="d-flex">
-                                            <h5 class="my-2 mt-n1 mr-auto">Cave <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
-                                            <spann id="db_add" class="btn btn-success rounded-sm m-2 font-weight-bolder ml-auto mt-n2"data-toggle="modal" data-target="#new_article"> + </spann>
-                                        </div>
-                                    {% endif%}
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!--------- Inventaire congel --------->
-            <div class="tab-pane fade" id="pills-congel" role="tabpanel" aria-labelledby="pills-congel-tab">
-                <div class="card mx-3 mt-4" >
-                    <div class="card-body">
-                        <h5 class="card-title">Congel</h5>
-                        <p class="card-text">Be patient... work in progress.</p>    
-                    </div>
-                </div>
-            </div>
-            <!--------- Inventaire users --------->
-            <div class="tab-pane fade show " id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
-                <div class="card mx-3 mt-4">
-                    <div class="card-body">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Mail</th>
-                                <th scope="col">Droits</th>
-                                <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for elem in db %}  
-                                    <tr id="tabl_db_{{ loop.index }}">
-                                        <th scope="row">{{ loop.index }}<span id="tab_db_id_{{ loop.index }}" class="invisible">{{ elem.id }}</span></th>
-                                        <td id="tab_db_art_{{ loop.index }}">{{ elem.nom }}</td>
-                                        <td id="tab_db_qua_{{ loop.index }}">{{ elem.mail }}</td>
-                                        <td id="tab_db_per_{{ loop.index }}">{{ elem.droits }}</td>
-                                        <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
-                                    </tr>
-                                    {% if loop.last %}
-                                        {% set nb_elem = loop.length %}
-                                        <div class="d-flex">
-                                            <h5 class="my-2 mt-n1 mr-auto">Users <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
-                                            <spann id="db_add" class="btn btn-success rounded-sm m-2 font-weight-bolder ml-auto mt-n2"data-toggle="modal" data-target="#new_article"> + </spann>
-                                        </div>
-                                    {% endif%}
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="row mx-3 mt-4">
+                <a class=" btn btn-success active mr-3" id="btn_cave" href="/inventaire/cave" >Cave</a>
+                <a class=" btn btn-success active mr-3" id="btn_cave" href="/inventaire/congel" >Congel</a>
+                <a class=" btn btn-success active mr-2" id="btn_cave" href="/inventaire/users" >Users</a>
         </div>
-    </div>
+        {% if  database in ['cave', 'congel'] %}
+            <div class="card mx-3 mt-4">
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Article</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">périmé le:</th>
+                            <th scope="col">actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for elem in db %}  
+                                <tr id="tabl_db_{{ loop.index }}">
+                                    <th scope="row">{{ loop.index }}<span id="tab_db_id_{{ loop.index }}" class="invisible">{{ elem.id }}</span></th>
+                                    <td id="tab_db_art_{{ loop.index }}">{{ elem.article }}</td>
+                                    <td id="tab_db_qua_{{ loop.index }}">{{ elem.quantite }}</td>
+                                    <td id="tab_db_per_{{ loop.index }}">{{ elem.peremption }}</td>
+                                    <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
+                                </tr>
+                                {% if loop.last %}
+                                    {% set nb_elem = loop.length %}
+                                    <div class="d-flex">
+                                        <h5 class="my-2 mt-n1 mr-auto">{{ database }} <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
+                                        <spann id="db_add" class="btn btn-success rounded-sm m-2 font-weight-bolder ml-auto mt-n2"data-toggle="modal" data-target="#new_article"> + </spann>
+                                    </div>
+                                {% endif%}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% elif database == 'users' %}
+                    <div class="card mx-3 mt-4">
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nom</th>
+                                    <th scope="col">Mail</th>
+                                    <th scope="col">Droits</th>
+                                    <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for elem in db %}  
+                                        <tr id="tabl_db_{{ loop.index }}">
+                                            <th scope="row">{{ loop.index }}<span id="tab_db_id_{{ loop.index }}" class="invisible">{{ elem.id }}</span></th>
+                                            <td id="tab_db_art_{{ loop.index }}">{{ elem.nom }}</td>
+                                            <td id="tab_db_qua_{{ loop.index }}">{{ elem.mail }}</td>
+                                            <td id="tab_db_per_{{ loop.index }}">{{ elem.droits }}</td>
+                                            <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
+                                        </tr>
+                                        {% if loop.last %}
+                                            {% set nb_elem = loop.length %}
+                                            <div class="d-flex">
+                                                <h5 class="my-2 mt-n1 mr-auto">Users <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
+                                            </div>
+                                        {% endif%}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                   
+                {% endif %}
+        
     <!--------- Modal ajout article --------->
     <div class="modal" id="new_article">
         <div class="modal-dialog">

@@ -38,7 +38,7 @@ def db_add(dbase, donnees):
     article, nb, périmé = donnees
     db.session.add(database[dbase](article, nb, périmé, 'non'))
     db.session.commit()
-    print('DEBUG: ajout article ')
+    print('DEBUG: ajout article {}/{}'.format(dbase, donnees))
 
 # ------------ old db --------------------------
 def recup_db(db):

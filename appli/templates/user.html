@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block menu %}
+    {% block navbar %}
+        {{ super() }}
+    {% endblock %}
+{% endblock %}
+
+{% block user %} 
+<div class="container">
+        <div class="card mx-3 mt-4"style="width:500px;">
+            <div class="card-body">
+                <h3 class="card-title"> {{ user }}</h3>
+                <h5 class="card-subtitle text-muted mt-2">Paramètres:</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Nom:{{ user }}</li>
+                    <li class="list-group-item border border-0">Mail:</li>
+                    <li class="list-group-item border border-0 ">Changer mdp</li>
+                </ul>
+                <h5 class="card-subtitle text-muted mt-2">Messages:</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Pas de nouveaux messages</li>
+
+                </ul>
+            </div>
+        </div>
+                
+{% endblock %}

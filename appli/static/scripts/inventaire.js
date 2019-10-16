@@ -7,7 +7,7 @@ function get_db_id(id){
 }
 function efface(id){
     var db_id = get_db_id(id)
-    $.post("/inventaire2/",
+    $.post(window.location.href,
         {'command':'del',
          'ligne':id.id,
          'db_id':db_id,
@@ -26,7 +26,7 @@ art_valide.onclick = function(){
     var quant = new_art_quant.value
     var perime = new_art_date.value
     console.log('formulaire rempli:'+ article +':'+ quant +':'+ perime)
-    $.post("/inventaire2/",
+    $.post(window.location.href,
         {'command':'add',
          'article':article,
          'quantité':quant,
