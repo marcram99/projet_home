@@ -16,8 +16,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Photos</h5>
                         {% for element in liste %} 
-                        
-                            <span class="col-1"><img src="{{ url_for('static', filename='images/LogoVilla.png') }}" alt="Logo" style="width:70px;"></span>
+                            {% set pic = 'images/Pictures/' + element %}
+                            <span class="col-1"><img src="{{ url_for('static', filename=pic) }}" class="img-thumbnail"alt="{{ element }}" style="width:150px;"></span>
                         {% endfor %}                       
                     </div>
                 </div>

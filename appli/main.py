@@ -52,7 +52,7 @@ def inventaire(database):
 @app.route('/archives', methods=['POST', 'GET'])
 @login_required
 def archives():
-    chemin = '/Users/mcwa//Pictures/Pictures'
+    chemin = '/Users/mcwa/Pictures/Pictures'
     liste_dir = os.listdir(chemin)
     return render_template('archives.html',
                            liste=liste_dir,
