@@ -73,7 +73,14 @@ def user(u_conected):
 def raspberry():
     """pi1 = connection(config.pi1_conf[0], config.pi1_conf[1])
     pi2 = connection(config.pi2_conf[0], config.pi2_conf[1])"""
-    return render_template('raspberry.html')
+    pi1 = [22 , 85, 'connecté']
+    pi2 = [22 , 85, 'erreur']
+    return render_template('raspberry.html',
+                           pi1_data=pi1,
+                           pi2_data=pi2,
+                           pi1_conf=config.pi1_conf,
+                           pi2_conf=config.pi2_conf
+                           )
 
 @app.route('/login')
 def login():
