@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from datetime import datetime
 import logging as lg
 
 from .main import app
@@ -60,6 +61,7 @@ class Users(UserMixin, db.Model):
     mdp = db.Column(db.String(20), nullable=False)
     mail = db.Column(db.String(20), nullable=True)
     droits = db.Column(db.String(20), nullable=True)
+    posts = db.relationship('Messages', backref='auteur', lazy='dynamic')
 
     entetes = [['nom', 3], ['mdp', 3], ['mail', 3], ['droits', 1]]
     champ_db = [id, nom, mdp, mail, droits]
@@ -72,6 +74,17 @@ class Users(UserMixin, db.Model):
 
     def __repr__(self):
         return 'user: {} / {} /  {}/  {}'.format(self.nom, self.mdp, self.mail, self.droits)
+
+class Messages(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, user_id, message):
+        self.user_id = user_id
+        self.message = message
+
 
 
 def init_db():
@@ -86,5 +99,9 @@ def init_db():
     db.session.add(Users('Sophie', 'sosso', 'slofie130@gmail.com', 'user'))
     db.session.add(Users('Nolan', 'nono', 'no_mail', 'user'))
     db.session.add(Users('Timéo', 'timi', 'no_mail', 'user'))
+    db.session.add(Messages(1,'Bonjour... premier message'))
+    db.session.add(Messages(1,'Et un deuxième message'))
+    db.session.add(Messages(1,'Et de 3 pour m'))
+    db.session.add(Messages(3,'Et un message pour sosso'))
     db.session.commit()
     lg.warning('db initialisée!')

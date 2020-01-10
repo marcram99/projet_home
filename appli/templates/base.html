@@ -43,8 +43,8 @@
                                                     <i class="fa fa-user-circle-o fa-lg my-1 mr-2" ></i>{{ current_user.nom }}
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                                                  
-                                                <a class="dropdown-item" href="{{ url_for('user',u_conected= current_user.nom ) }}"><i class="fa fa-cog fa-lg my-1 mr-2" ></i>Mes paramètres</a>
-                                                <a class="dropdown-item border border-bottom-0" href="#"><i class="fa fa-envelope-o fa-lg my-1 mr-2" ></i>Aucun message</a>
+                                                <a class="dropdown-item" href="{{ url_for('user',u_conected= current_user.nom, view='params' ) }}"><i class="fa fa-cog fa-lg my-1 mr-2" ></i>Mes paramètres</a>
+                                                <a class="dropdown-item border border-bottom-0" href="{{ url_for('user',u_conected= current_user.nom, view='messages' ) }}"><i class="fa fa-envelope-o fa-lg my-1 mr-2" ></i>Mes messages</a>
                                                 <a class="dropdown-item" href="#"><i class="fa fa-bell-o fa-lg my-1 mr-2" ></i>Aucune notification</a>
                                                 <a id="m_logout" class="dropdown-item border border-bottom-0 " href="{{ url_for('logout') }}"><i class="fa fa-power-off fa-lg my-1 mr-2" ></i>Logout</a>
                                             </div>

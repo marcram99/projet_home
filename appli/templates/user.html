@@ -5,23 +5,45 @@
     {% endblock %}
 {% endblock %}
 
-{% block user %} 
-<div class="container">
-        <div class="card mx-3 mt-4"style="width:500px;">
-            <div class="card-body">
-                <h3 class="card-title"> {{ user }}</h3>
-                <h5 class="card-subtitle text-muted mt-2">Paramètres:</h5>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Nom:{{ user }}</li>
-                    <li class="list-group-item border border-0">Mail:</li>
-                    <li class="list-group-item border border-0 ">Changer mdp</li>
-                </ul>
-                <h5 class="card-subtitle text-muted mt-2">Messages:</h5>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Pas de nouveaux messages</li>
+{% block user %}
+    <div class="container">
+        {% if view == 'messages' %}
+            <h1 class='m-2 p-2 text-white'>Messages de {{ user.nom }}:</h1> 
+            {% for messages in posts %}             
+                <div class='card m-2 p-2'style="width:500px;">
+            {{ messages.timestamp|date_trunk }} : {{ messages.message }}
+                </div>
+            {% endfor %}    
+        {% else %}
+        <h1 class='m-2 p-2 text-white'>Mes Paramètres :</h1> 
+            <div class="card mx-3 mt-4"style="width:500px;">
+                <div class="card-body">
+                    <h3 class="card-title"> {{ user.nom }}</h3>
+                    <table class="table">
+                        <tr>
+                            <td>Nom:</td>
+                            <td>{{ user.nom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Mail:</td>
+                            <td>{{ user.mail }}</td>
+                        </tr>
+                        <tr>
+                            <td>Changer mdp</td><td></td>
+                        </tr>
+                        <tr>
+                            <td class='font-weight-bold'>Paramètres messagerie:</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>Afficher ses messages sur la page d'accueil:</td><td>oui</td>
+                        </tr>
+                   </table>
+                </div> 
+            </div>      
+        {% endif %}
+        
+        
+    </div>
 
-                </ul>
-            </div>
-        </div>
                 
 {% endblock %}

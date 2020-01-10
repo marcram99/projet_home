@@ -4,11 +4,19 @@
         <div class="row mx-3 mt-4">
                 <a class=" btn btn-success active mr-3" id="btn_cave" href="/inventaire/cave" >Cave</a>
                 <a class=" btn btn-success active mr-3" id="btn_cave" href="/inventaire/congel" >Congel</a>
-                <a class=" btn btn-success active mr-2" id="btn_cave" href="/inventaire/users" >Users</a>
+                {% if current_user.droits == 'admin' %}
+                    <a class=" btn btn-info active mr-3" id="btn_cave" href="/inventaire/users" >Utilisateurs</a>
+                    <a class=" btn btn-info active mr-2" id="btn_cave" href="/inventaire/Messages">Messages</a>
+                {% endif %}
         </div>
         {% if  database in ['cave', 'congel'] %}
             <div class="card mx-3 mt-4">
                 <div class="card-body">
+                    <h4 class="float-left ml-2 pb-2">{{ database|capitalize }}</h4>
+                    
+                    <i id="add_art" class="fa fa-plus-circle fa-3x text-success mt-n2 float-right" data-toggle="tooltip" title="Nouvel article" onclick="ajoute(this)"></i>
+                    <i id="add_art" class="fa fa-file-pdf-o fa-lg mt-2 mr-4 float-right" data-toggle="tooltip" title="PDF" onclick="pdf()"></i>
+                    <i id="add_art" class="fa fa-envelope-o fa-lg mt-2 mr-4 float-right" data-toggle="tooltip" title="envoi liste par e-mail"></i>
                     <table class="table table-sm">
                         <thead>
                             <tr>
@@ -26,15 +34,11 @@
                                     <td id="tab_db_art_{{ loop.index }}">{{ elem.article }}</td>
                                     <td id="tab_db_qua_{{ loop.index }}">{{ elem.quantite }}</td>
                                     <td id="tab_db_per_{{ loop.index }}">{{ elem.peremption }}</td>
-                                    <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
+                                    <td><button id="trash_{{ loop.index }}" class="btn" onclick="modifie(this)"><i class="fa fa-pencil mt-n2" ></i>
+                                        <button id="trash_{{ loop.index }}" class="btn" onclick="copie(this)"><i class="fa fa-files-o mt-n2" ></i>
+                                        <button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mt-n2" ></i>
+                                    </td>
                                 </tr>
-                                {% if loop.last %}
-                                    {% set nb_elem = loop.length %}
-                                    <div class="d-flex">
-                                        <h5 class="my-2 mt-n1 mr-auto">{{ database }} <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
-                                        <spann id="db_add" class="btn btn-success rounded-sm m-2 font-weight-bolder ml-auto mt-n2"data-toggle="modal" data-target="#new_article"> + </spann>
-                                    </div>
-                                {% endif%}
                             {% endfor %}
                         </tbody>
                     </table>
@@ -42,6 +46,7 @@
                 {% elif database == 'users' %}
                     <div class="card mx-3 mt-4">
                         <div class="card-body">
+                            <h4 class="float-left ml-2 pb-2">{{ database|capitalize }}</h4>
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
@@ -64,7 +69,7 @@
                                         {% if loop.last %}
                                             {% set nb_elem = loop.length %}
                                             <div class="d-flex">
-                                                <h5 class="my-2 mt-n1 mr-auto">Users <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
+                                                <h5 class="my-2 mt-n1 mr-auto"> <spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
                                             </div>
                                         {% endif%}
                                     {% endfor %}
@@ -72,7 +77,40 @@
                             </table>
                         </div>
                     </div>
-                   
+                {% elif database == 'Messages' %}
+                    <div class="card mx-3 mt-4">
+                        <div class="card-body">
+                            <h4 class="float-left ml-2 pb-2">{{ database|capitalize }}</h4>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Message</th>
+                                    <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for elem in db|reverse %}  
+                                        <tr id="tabl_db_{{ loop.index }}">
+                                            <th scope="row">{{ loop.index }}<span id="tab_db_id_{{ loop.index }}" class="invisible">{{ elem.id }}</span></th>
+                                            <td id="tab_db_qua_{{ loop.index }}">{{ elem.timestamp|date_trunk }}</td>
+                                            <td id="tab_db_art_{{ loop.index }}">{{ users[elem.user_id-1].nom }}</td>
+                                            <td id="tab_db_per_{{ loop.index }}">{{ elem.message }}</td>
+                                            <td><button id="trash_{{ loop.index }}" class="btn" onclick="efface(this)"><i class="fa fa-trash-o mr-2  mt-n2" ></i></td>
+                                        </tr>
+                                        {% if loop.last %}
+                                            {% set nb_elem = loop.length %}
+                                            <div class="d-flex">
+                                                <h5 class="my-2 mt-n1 mr-auto"><spann id="nb_elem" class="invisible">{{ nb_elem }}</spann></h5>
+                                            </div>
+                                        {% endif%}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>  
                 {% endif %}
         
     <!--------- Modal ajout article --------->
@@ -88,7 +126,7 @@
                     <input type="text" class="form-control" id="new_art_nom" name="uname" required>
                     <label for="new_art_quant" class="mt-2">Quantité:</label>
                     <input type="text" class="form-control" id="new_art_quant" name="uname">
-                    <label for="new_art_quant" class="mt-2">Date de péremption:</label>
+                    <label for="new_art_date" class="mt-2">Date de péremption:</label>
                     <input type="text" class="form-control" id="new_art_date" name="uname">
                 </div>
                 <div class="modal-footer">
