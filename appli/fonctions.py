@@ -1,10 +1,10 @@
 import socket, sys
 from sqlalchemy import text
 from fpdf import FPDF
+from pathlib import Path
 from datetime import datetime
 
-from .models import db, Cave, Congel, Users, Messages
-
+from .models import db, Cave, Congel, Users, Messages, Inventaire
 
 def connection(host,port):
     my_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -22,21 +22,21 @@ def connection(host,port):
     return temp, hum, conn_message
 
 def db_recup(dbase):
-    database = {'cave': Cave, 'congel': Congel, 'users': Users, 'Messages': Messages}
-    resultat = database[dbase].query.all()
+    database = {'cave': Inventaire, 'congel': Inventaire, 'users': Users, 'Messages': Messages}
+    resultat = database[dbase].query.filter(database[dbase].tag == dbase)
     return resultat
 
 def db_del(dbase, id):
-    database = {'cave': Cave, 'congel': Congel, 'users': Users, 'Messages': Messages}
+    database = {'cave': Inventaire, 'congel': Inventaire, 'users': Users, 'Messages': Messages}
     article = database[dbase].query.get(id)
     db.session.delete(article)
     db.session.commit()
     print('DEBUG: delete article avec id: {}'.format(id))
 
 def db_add(dbase, donnees):
-    database = {'cave': Cave, 'congel': Congel, 'users': Users}
+    database = {'cave': Inventaire, 'congel': Inventaire, 'users': Users}
     article, nb, périmé = donnees
-    db.session.add(database[dbase](article, nb, périmé, 'non'))
+    db.session.add(database[dbase](article, nb, périmé, dbase))
     db.session.commit()
     print('DEBUG: ajout article {}/{}'.format(dbase, donnees))
 
@@ -54,26 +54,25 @@ def add_message(user, message):
     db.session.commit()
     print('message ajouté')
 # ------------ pdf --------------------------
-def gen_pdf():
-    now = datetime.now().strftime('%d-%m-%y / %H:%M')
-    texte = " Inventaire de la cave au: {}".format(now)
+def gen_pdf(database):
+    now = datetime.now().strftime('%d-%m-%y %H:%M')
+    pdf_file = Path(__file__).parent.joinpath('static/files/inventaire_{}.pdf'.format(database))
+    titre = " Inventaire {} au {}".format(database, now)
+    data =[['article', 'nombre', 'date']]
+    db_data = db_recup(database)
+    for lignes in db_data:
+        data.append([lignes.article, str(lignes.quantite), str(lignes.peremption)])
+
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt=texte, ln=1, align="C")
-
-    data = [['First Name', 'Last Name', 'email', 'zip'],
-            ['Mike', 'Driscoll', 'mike@somewhere.com', '55555'],
-            ['John', 'Doe', 'jdoe@doe.com', '12345'],
-            ['Nina', 'Ma', 'inane@where.com', '54321']
-            ]
- 
+    pdf.set_font("Arial", size=14)
+    pdf.cell(200, 10, txt=titre, ln=1)
+    pdf.ln(1)
     col_width = pdf.w / 4.5
-    row_height = pdf.font_size
+    row_height = pdf.font_size + 3
     for row in data:
-        for item in row:
-            pdf.cell(col_width, row_height*1,
-                     txt=item, border=1)
+        pdf.cell(65, row_height,txt=row[0], border=1)
+        pdf.cell(20, row_height,txt=row[1], border=1, align="C")
+        pdf.cell(30, row_height,txt=row[2], border=1, align="C")
         pdf.ln(row_height*1)
-
-    pdf.output("inventaire.pdf")
+    pdf.output(pdf_file)

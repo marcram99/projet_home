@@ -2,20 +2,19 @@
 {% block inventaire %}
     <div class="container">
         <div class="row mx-3 mt-4">
-                <a class=" btn btn-success active mr-3" id="btn_cave" href="/inventaire/cave" >Cave</a>
-                <a class=" btn btn-success active mr-3" id="btn_cave" href="/inventaire/congel" >Congel</a>
+                <a class=" btn btn-success active mr-3 mb-1 col col-xs-12" id="btn_cave" href="/inventaire/cave" >Cave</a>
+                <a class=" btn btn-success active mr-3 mb-1 col col-xs-12" id="btn_cave" href="/inventaire/congel" >Congel</a>
                 {% if current_user.droits == 'admin' %}
-                    <a class=" btn btn-info active mr-3" id="btn_cave" href="/inventaire/users" >Utilisateurs</a>
-                    <a class=" btn btn-info active mr-2" id="btn_cave" href="/inventaire/Messages">Messages</a>
+                    <a class=" btn btn-info active mr-3 mb-1 col col-xs-6" id="btn_cave" href="/inventaire/users" >Utilisateurs</a>
+                    <a class=" btn btn-info active  mb-1 col col-xs-6" id="btn_cave" href="/inventaire/Messages">Messages</a>
                 {% endif %}
         </div>
         {% if  database in ['cave', 'congel'] %}
             <div class="card mx-3 mt-4">
                 <div class="card-body">
                     <h4 class="float-left ml-2 pb-2">{{ database|capitalize }}</h4>
-                    
                     <i id="add_art" class="fa fa-plus-circle fa-3x text-success mt-n2 float-right" data-toggle="tooltip" title="Nouvel article" onclick="ajoute(this)"></i>
-                    <i id="add_art" class="fa fa-file-pdf-o fa-lg mt-2 mr-4 float-right" data-toggle="tooltip" title="PDF" onclick="pdf()"></i>
+                    <i id="add_art" class="fa fa-file-pdf-o fa-lg mt-2 mr-4 float-right" data-toggle="tooltip" title="PDF" onclick="pdf(this)"></i>
                     <i id="add_art" class="fa fa-envelope-o fa-lg mt-2 mr-4 float-right" data-toggle="tooltip" title="envoi liste par e-mail"></i>
                     <table class="table table-sm">
                         <thead>

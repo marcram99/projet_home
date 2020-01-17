@@ -70,9 +70,10 @@ def inventaire(database):
                 db_mod(database, params['db_id'], donnees)
             return json.dumps({'message':'ok'})
         if params['command'] == 'pdf':
-            print('DEBUG:PDF')
-            gen_pdf()
-            return json.dumps({'message':'ok'})
+            if database in ['cave', 'congel']:
+                print('DEBUG:PDF')
+                gen_pdf(database)
+                return json.dumps({'message':'ok'})
     return render_template('inventaire.html',
                            database=database,
                            db=db,

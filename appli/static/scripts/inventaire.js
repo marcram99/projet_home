@@ -84,10 +84,10 @@ art_valide.onclick = function(){
     )
 }
 function pdf(id){
+     
     event.preventDefault()
     $.post(window.location.href,
-        {'command': 'pdf',
-        'database': 'cave'
+        {'command': 'pdf'
         },    
         function(results){
             document.location.reload(true)

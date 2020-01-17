@@ -28,11 +28,7 @@ class Cave(db.Model):
         self.quantite = quantite
         self.peremption = peremption
         self.envoi_mail = envoi_mail
-
-    def __repr__(self):
-        return 'article:{} / nb: {} / perim.: {}'.format(self.article, self.quantite, self.peremption)
-
-
+        
 class Congel(db.Model):
     __tablename__ = 'congel'
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +48,27 @@ class Congel(db.Model):
 
     def __repr__(self):
         return 'article:{} / nb: {} / perim.: {}'.format(self.article, self.quantite, self.peremption)
+
+class Inventaire(db.Model):
+    __tablename__ = 'inventaire'
+    id = db.Column(db.Integer, primary_key=True)
+    article = db.Column(db.String(40), nullable=False)
+    quantite = db.Column(db.Integer(), nullable=True)
+    perime = db.Column(db.String(), nullable=True)
+    tag = db.Column(db.String(), nullable=True)
+
+    entetes = [['article', 4], ['nb', 1], ['périmé le ', 2]]
+    champ_db = ['id', 'article', 'quantite', 'perime']
+
+
+    def __init__(self, article, quantite, perime, tag):
+        self.article = article
+        self.quantite = quantite
+        self.perime = perime
+        self.tag = tag
+
+    def __repr__(self):
+        return 'article:{} / nb: {} / perim.: {}'.format(self.article, self.quantite, self.perime)
 
 
 class Users(UserMixin, db.Model):
@@ -75,6 +92,7 @@ class Users(UserMixin, db.Model):
     def __repr__(self):
         return 'user: {} / {} /  {}/  {}'.format(self.nom, self.mdp, self.mail, self.droits)
 
+
 class Messages(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.String(140))
@@ -86,14 +104,13 @@ class Messages(db.Model):
         self.message = message
 
 
-
 def init_db():
     print('lancé init_db')
     db.drop_all()
     db.create_all()
-    db.session.add(Cave('pates', 3, '01.01.2019','oui'))
-    db.session.add(Cave('pq', 1, '01.01.2019','non'))
-    db.session.add(Congel('pizza margeritte', 1, '01.01.2019','oui'))
+    db.session.add(Inventaire('pates', 3, '01.01.2019','cave'))
+    db.session.add(Inventaire('pq', 1, '01.01.2019','cave'))
+    db.session.add(Inventaire('pizza margeritte', 1, '01.01.2019','congel'))
     db.session.add(Users('marcram', 'marcram', 'marcram99@gmail.com', 'admin'))
     db.session.add(Users('Marc', 'marcram', 'marcram99@gmail.com', 'user'))
     db.session.add(Users('Sophie', 'sosso', 'slofie130@gmail.com', 'user'))
@@ -101,7 +118,7 @@ def init_db():
     db.session.add(Users('Timéo', 'timi', 'no_mail', 'user'))
     db.session.add(Messages(1,'Bonjour... premier message'))
     db.session.add(Messages(1,'Et un deuxième message'))
-    db.session.add(Messages(1,'Et de 3 pour m'))
-    db.session.add(Messages(3,'Et un message pour sosso'))
+    db.session.add(Messages(1,'Et de 3 pour moi'))
+    db.session.add(Messages(3,'Un message pour Sosso'))
     db.session.commit()
     lg.warning('db initialisée!')
